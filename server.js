@@ -9,10 +9,10 @@ const port = 5000;
 
 app.get("/books", async (req, res) => {
   try {
-    const book = await pool.query("SELECT * FROM book");
+    const books = await pool.query("SELECT * FROM book");
     res.status(201).json({
       message: `success`,
-      data: book.rows,
+      data: books.rows,
     });
   } catch (error) {
     console.error(error);
@@ -23,6 +23,11 @@ app.get("/books", async (req, res) => {
 app.get("/books/:id", async (req, res) => {
   try {
     const { id } = req.params;
+    const book = await pool.query("SELECT * FROM book WHERE id=$1", [id]);
+    res.status(201).json({
+      message: `success`,
+      data: book.rows,
+    });
   } catch (error) {
     console.error(error);
     res.json({ error: error.message });
