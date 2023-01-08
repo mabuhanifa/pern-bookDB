@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const pool = require("./db");
+const { v4: uuidv4 } = require("uuid");
 app.use(express.json());
 app.use(cors());
 const port = 5000;
@@ -26,8 +27,9 @@ app.get("/books/:id", async (req, res) => {
 app.post("/books", async (req, res) => {
   try {
     const { name, description } = req.body;
+    const id = uuidv4();
     res.status(201).json({
-      message: `book was created successfully ${name} ${description}`,
+      message: `book was created successfully ${id} ,${name}, ${description}`,
     });
   } catch (error) {
     console.error(error);
