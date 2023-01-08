@@ -1,1 +1,7 @@
 CREATE DATABASE bookDB;
+
+CREATE TABLE book(
+    id VARCHAR(20) PRIMARY KEY,
+    name VARCHAR(50),
+    description VARCHAR(255)
+);
