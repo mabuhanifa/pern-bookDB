@@ -28,8 +28,14 @@ app.post("/books", async (req, res) => {
   try {
     const { name, description } = req.body;
     const id = uuidv4();
+    const newBook = await pool.query(
+      "INSERT INTO book (id,name, description) VALUES($1, $2, $3) RETURNING *",
+      [id, name, description]
+    );
+
     res.status(201).json({
       message: `book was created successfully ${id} ,${name}, ${description}`,
+      data: newBook.rows,
     });
   } catch (error) {
     console.error(error);
@@ -40,5 +46,3 @@ app.post("/books", async (req, res) => {
 app.listen(port, () => {
   console.log(`App listening on ${port}`);
 });
-
-pool;
