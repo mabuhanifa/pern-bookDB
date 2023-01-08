@@ -9,6 +9,11 @@ const port = 5000;
 
 app.get("/books", async (req, res) => {
   try {
+    const book = await pool.query("SELECT * FROM book");
+    res.status(201).json({
+      message: `success`,
+      data: book.rows,
+    });
   } catch (error) {
     console.error(error);
     res.json({ error: error.message });
